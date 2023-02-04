@@ -4,13 +4,11 @@ import coursera.entities.Student;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class StudentRepository implements GlobalRepository {
-
     public List<Student> findAllStudentsByPIN(int[] pin) {
         List<Student> allStudent = new ArrayList<>();
         // statement resultSet global for every

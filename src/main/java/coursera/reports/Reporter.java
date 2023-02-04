@@ -1,6 +1,5 @@
 package coursera.reports;
 
-
 import coursera.entities.Student;
 
 import java.util.List;

@@ -3,7 +3,6 @@ package coursera.entities;
 import java.util.Date;
 
 public class Student {
-
     private final String firstName;
     private final String lastName;
     private final Date timeCreated;
