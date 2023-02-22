@@ -9,11 +9,23 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StudentRepository implements GlobalRepository {
-    public List<Student> findAllStudents() {
+    private static final String QUERY_ALL_STUDENTS = "SELECT sc.student_pin, s.first_name, s.last_name, s.time_created," +
+            "sum(c.credit) as total_credit " +
+            "FROM students_courses_xref as sc " +
+            "JOIN courses as c ON sc.course_id = c.id " +
+            "JOIN students as s ON sc.student_pin = s.pin ";
+    private static final String GROUP_BY = "GROUP BY sc.student_pin ";
+    private static final String CREDIT_CONSTRAINT = "HAVING total_credit >= ? ";
+    private static final String PIN_CONSTRAIN = "AND sc.student_pin IN ";
+
+    public List<Student> findAllStudentsByCredit(int credit) {
         List<Student> students = new ArrayList<>();
-        try (ResultSet rs = CONNECTION.createStatement().executeQuery("SELECT * FROM students")) {
-            while (rs.next()) {
-                students.add(getStudent(rs));
+        try (PreparedStatement preparedStatement = CONNECTION
+                .prepareStatement(QUERY_ALL_STUDENTS + GROUP_BY + CREDIT_CONSTRAINT)) {
+            preparedStatement.setInt(1, credit);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                students.add(getStudent(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -22,12 +34,17 @@ public class StudentRepository implements GlobalRepository {
         return students;
     }
 
-    public List<Student> findAllStudentsByPIN(String[] pins) { // credit, pin
+    public List<Student> findAllStudentsByPINAndCredit(String[] pins, int credit) {
         List<Student> students = new ArrayList<>();
         try (PreparedStatement preparedStatement = CONNECTION
-                .prepareStatement("SELECT * FROM students WHERE pin IN (" + getPlaceHolders(pins) + ")")) {
+                .prepareStatement(QUERY_ALL_STUDENTS
+                        + GROUP_BY
+                        + CREDIT_CONSTRAINT
+                        + PIN_CONSTRAIN
+                        + "(" + getPlaceHolders(pins) + " )")) {
+            preparedStatement.setInt(1, credit);
             for (int i = 0; i < pins.length; i++) {
-                preparedStatement.setString(i + 1, pins[i]);
+                preparedStatement.setString(i + 2, pins[i]);
             }
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -39,6 +56,7 @@ public class StudentRepository implements GlobalRepository {
         }
         return students;
     }
+
     private static Student getStudent(ResultSet rs) throws SQLException {
         Student student;
         String firstName = rs.getString("first_name");
@@ -47,6 +65,7 @@ public class StudentRepository implements GlobalRepository {
         student = new Student(firstName, lastname, timeCreated);
         return student;
     }
+
     private static String getPlaceHolders(String[] pins) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < pins.length; i++) {
