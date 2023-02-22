@@ -5,9 +5,9 @@ import java.util.Date;
 public class Student {
     private final String firstName;
     private final String lastName;
-    private final Date timeCreated;
+    private final String timeCreated;
 
-    public Student(String firstName, String lastName, Date timeCreated) {
+    public Student(String firstName, String lastName, String timeCreated) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.timeCreated = timeCreated;
@@ -21,7 +21,7 @@ public class Student {
         return lastName;
     }
 
-    public Date getTimeCreated() {
+    public String getTimeCreated() {
         return timeCreated;
     }
 }
