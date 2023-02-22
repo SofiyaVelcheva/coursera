@@ -8,6 +8,7 @@ public class Main {
         String path = "csv";
         String[] pins = {"9507141009","9412011005"};
         //String[] pins = new String[0];
-        studentService.getReport(path, pins);
+        int minCredit = 25;
+        studentService.getReport(path, pins, minCredit);
     }
 }

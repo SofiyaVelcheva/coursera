@@ -11,7 +11,7 @@ public class StudentService {
     public static Reporter reporter;
     public static final StudentRepository studentRepository = new StudentRepository();
 
-    public void getReport(String filePath, String[] pins) {
+    public void getReport(String filePath, String[] pins, int minCredit) {
         if (filePath.contains("csv")) {
             reporter = new CSVReporter();
         } else {
@@ -19,9 +19,9 @@ public class StudentService {
         }
         List<Student> students;
         if (pins.length == 0) {
-            students = studentRepository.findAllStudents();
+            students = studentRepository.findAllStudentsByCredit(minCredit);
         } else {
-            students = studentRepository.findAllStudentsByPIN(pins);
+            students = studentRepository.findAllStudentsByPINAndCredit(pins, minCredit);
         }
         reporter.writeReportToFile(filePath, students);
     }
