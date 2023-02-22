@@ -5,26 +5,23 @@ import coursera.reports.CSVReporter;
 import coursera.reports.Reporter;
 import coursera.repositories.StudentRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StudentService {
     public static Reporter reporter;
     public static final StudentRepository studentRepository = new StudentRepository();
 
-    public void getReportPIN(String filePath, String[] pin) {
+    public void getReport(String filePath, String[] pins) {
         if (filePath.contains("csv")) {
             reporter = new CSVReporter();
         } else {
             // todo for HTML
         }
-        List<Student> students = new ArrayList<>();
-        if (pin.length == 0) {
+        List<Student> students;
+        if (pins.length == 0) {
             students = studentRepository.findAllStudents();
         } else {
-            for (String i : pin) {
-                students.add(studentRepository.findStudentByPIN(i));
-            }
+            students = studentRepository.findAllStudentsByPIN(pins);
         }
         reporter.writeReportToFile(filePath, students);
     }
