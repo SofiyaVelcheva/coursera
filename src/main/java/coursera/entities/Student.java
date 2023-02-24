@@ -1,11 +1,10 @@
 package coursera.entities;
 
-import java.util.Date;
-
 public class Student {
     private final String firstName;
     private final String lastName;
     private final String timeCreated;
+    private int totalCredit;
 
     public Student(String firstName, String lastName, String timeCreated) {
         this.firstName = firstName;
@@ -23,5 +22,13 @@ public class Student {
 
     public String getTimeCreated() {
         return timeCreated;
+    }
+
+    public int getTotalCredit() {
+        return totalCredit;
+    }
+
+    public void setTotalCredit(int totalCredit) {
+        this.totalCredit = totalCredit;
     }
 }

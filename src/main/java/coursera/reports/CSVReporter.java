@@ -10,14 +10,17 @@ import java.util.List;
 public class CSVReporter implements Reporter {
     @Override
     public void writeReportToFile(String filePath, List<Student> students) {
-        try (BufferedWriter br = new BufferedWriter(new FileWriter(filePath))) {
+        try (BufferedWriter bufferedWriter
+                     = new BufferedWriter(new FileWriter(filePath))) {
             for (Student student : students) {
-                br.write(student.getFirstName());
-                br.write(" ");
-                br.write(student.getLastName());
-                br.write(", ");
-                br.write(String.valueOf(student.getTimeCreated()));
-                br.newLine();
+                bufferedWriter.write(student.getFirstName());
+                bufferedWriter.write(" ");
+                bufferedWriter.write(student.getLastName());
+                bufferedWriter.write(", ");
+                bufferedWriter.write(String.valueOf(student.getTotalCredit()));
+                bufferedWriter.write(", ");
+                bufferedWriter.write(String.valueOf(student.getTimeCreated()));
+                bufferedWriter.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
