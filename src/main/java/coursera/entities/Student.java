@@ -6,10 +6,11 @@ public class Student {
     private final String timeCreated;
     private int totalCredit;
 
-    public Student(String firstName, String lastName, String timeCreated) {
+    public Student(String firstName, String lastName, String timeCreated, int totalCredit) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.timeCreated = timeCreated;
+        this.totalCredit = totalCredit;
     }
 
     public String getFirstName() {
@@ -26,9 +27,5 @@ public class Student {
 
     public int getTotalCredit() {
         return totalCredit;
-    }
-
-    public void setTotalCredit(int totalCredit) {
-        this.totalCredit = totalCredit;
     }
 }

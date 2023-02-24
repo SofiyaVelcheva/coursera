@@ -68,8 +68,8 @@ public class StudentRepository implements GlobalRepository {
         String firstName = resultSet.getString("first_name");
         String lastname = resultSet.getString("last_name");
         String timeCreated = new SimpleDateFormat("dd-MM-yyyy").format(resultSet.getDate("time_created"));
-        student = new Student(firstName, lastname, timeCreated);
-        student.setTotalCredit(resultSet.getInt("total_credit"));
+        int totalCredit = resultSet.getInt("total_credit");
+        student = new Student(firstName, lastname, timeCreated, totalCredit);
         return student;
     }
 
