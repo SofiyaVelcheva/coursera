@@ -82,6 +82,7 @@ public class StudentRepository implements GlobalRepository {
         int totalCredit = resultSet.getInt("total_credit");
         return new Student(studentPin, firstName + " " + lastName, timeCreated, totalCredit);
     }
+
     private static List<Course> getCoursesByStudent(String studentPin, String startDate, String endDate) {
         List<Course> courses = new ArrayList<>();
         try (PreparedStatement preparedStatement = CONNECTION

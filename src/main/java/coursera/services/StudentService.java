@@ -2,8 +2,10 @@ package coursera.services;
 
 import coursera.entities.Student;
 import coursera.reports.CSVReporter;
+import coursera.reports.HTMLReporter;
 import coursera.reports.Reporter;
 import coursera.repositories.StudentRepository;
+
 import java.util.List;
 
 public class StudentService {
@@ -14,7 +16,7 @@ public class StudentService {
         if (filePath.contains("csv")) {
             reporter = new CSVReporter();
         } else {
-            // todo for HTML
+            reporter = new HTMLReporter();
         }
         List<Student> students;
         if (pins.length == 0) {
