@@ -15,15 +15,14 @@ public class StudentRepository implements GlobalRepository {
                     "JOIN courses as c ON sc.course_id = c.id " +
                     "JOIN students as s ON sc.student_pin = s.pin ";
     private static final String GROUP_BY = "GROUP BY sc.student_pin ";
-    private static final String HAVING_TOTAL_CREDIT = "HAVING total_credit > ? ";
+    private static final String HAVING_TOTAL_CREDIT = "HAVING total_credit >= ? ";
     private static final String AND_SC_STUDENT_PIN_IN = "AND sc.student_pin IN ";
     private static final String WHERE_SC_COMPLETION_DATE_BETWEEN_AND = "WHERE sc.completion_date BETWEEN ? AND ? ";
-
     private static final String QUERY_STUDENT_COURSE =
             "SELECT c.name, c.total_time, c.credit, i.first_name, i.last_name " +
                     "FROM students_courses_xref as sc " +
                     "JOIN courses as c ON sc.course_id = c.id " +
-                    "JOIN instructors as i ON c.instructor_id=i.id " +
+                    "JOIN instructors as i ON c.instructor_id = i.id " +
                     "WHERE sc.student_pin = ? " +
                     "AND sc.completion_date BETWEEN ? AND ?";
 
